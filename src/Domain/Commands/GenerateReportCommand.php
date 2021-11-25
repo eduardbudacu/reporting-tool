@@ -58,8 +58,26 @@ class GenerateReportCommand extends Command
         $datasource = DataSource::create($datasourceOption);
         $report = Report::create($reportOption, $datasource);
         $csv = $report->getCsv(['startdate' => $startDate, 'enddate' => $endDate]);
+
         $destination = Destination::create($publishOption, $reportOption . '.csv');
         $destination->publish($csv);
+
+        if($publishOption == 'local') {
+            $output->writeln([
+                'File succesfuly exported:',
+                $reportOption . '.csv'
+            ]);
+        } else {
+            $reportLinks = [
+                'turnover-per-brand' => 'https://datastudio.google.com/reporting/14905ce3-a16e-44ad-86db-f41c17b87600',
+                'turnover-per-day' => 'https://datastudio.google.com/reporting/ed46327d-862a-459b-b4a1-d950235604e4'
+            ];
+
+            $output->writeln([
+                'Report succesfuly generated. Follow the link below to view the report:',
+                $reportLinks[$reportOption]
+            ]);
+        }
         return Command::SUCCESS;
     }
 }
