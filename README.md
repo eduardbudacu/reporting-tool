@@ -1,6 +1,8 @@
 # Otrium Reporting Tool
 
-# Technical specs
+## Technical specs
+
+![Architecture overview](./docs/architecture.jpg)
 
 1. Data source
 

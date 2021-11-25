@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Domain\Commands;
 
 use Domain\DataSources\DataSource;
@@ -8,9 +9,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use DateTime;
+use Domain\Publishing\Destination;
+use Exception;
+
 class GenerateReportCommand extends Command
 {
-    
+
     public function configure()
     {
         $this->setName('generate')
@@ -18,20 +23,43 @@ class GenerateReportCommand extends Command
             ->setHelp('This command allows you generate the report you specified.')
             ->addArgument('report', InputArgument::REQUIRED, 'The name of the report.')
             ->addOption('datasource', 'd', InputArgument::OPTIONAL, 'Data source for the report', 'local')
+            ->addOption('publish', 'p', InputArgument::OPTIONAL, 'Destination for the report', 'local')
             ->addOption('startdate', 's', InputArgument::OPTIONAL, 'Start date')
             ->addOption('enddate', 'e', InputArgument::OPTIONAL, 'End date');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-       $report = $input->getArgument('report');
-       $datasourceOption = $input->getOption('datasource');
-       $startDate = $input->getOption('startdate');
-       $endDate = $input->getOption('enddate');
-       
-       $datasource = DataSource::create($datasourceOption);
-       $report = Report::create($report, $datasource);
-       var_dump($report->generateReport());
-       return Command::SUCCESS;
+        $reportOption = $input->getArgument('report');
+        $datasourceOption = $input->getOption('datasource');
+        $publishOption = $input->getOption('publish');
+        $startDate = $input->getOption('startdate');
+        $endDate = $input->getOption('enddate');
+        
+
+        if ($startDate) {
+            $startDate = DateTime::createFromFormat('d-m-Y H:i:s', $startDate . ' 00:00:00');
+            if($startDate) {
+                $startDate = $startDate->getTimestamp();
+            } else {
+                throw new Exception('Invalid start date');
+            }
+        }
+
+        if($endDate) {
+            $endDate = DateTime::createFromFormat('d-m-Y H:i:s', $endDate . ' 00:00:00');
+            if($endDate) {
+                $endDate = $endDate->getTimestamp();
+            } else {
+                throw new Exception('Invalid start date');
+            }
+        }
+
+        $datasource = DataSource::create($datasourceOption);
+        $report = Report::create($reportOption, $datasource);
+        $csv = $report->getCsv(['startdate' => $startDate, 'enddate' => $endDate]);
+        $destination = Destination::create($publishOption, $reportOption . '.csv');
+        $destination->publish($csv);
+        return Command::SUCCESS;
     }
 }

@@ -3,6 +3,7 @@
 namespace Domain\Reports;
 
 use Domain\DataSources\DataSource;
+use Domain\Publishing\Destination;
 use Exception;
 
 abstract class Report {
@@ -11,11 +12,25 @@ abstract class Report {
 
     protected $datasource;
 
-    abstract public function generateReport();
+    abstract public function generateReport(array $filters = []);
 
     public function __construct(DataSource $datasource)
     {
         $this->datasource = $datasource;
+    }
+
+    public function getCsv(array $filters = []) {
+        $data = $this->generateReport($filters);
+
+        if(!empty($data)) {
+            $csv = implode(",", array_keys(array_values($data)[0])). PHP_EOL;
+
+            foreach ($data as $item) {
+                $csv .= implode(",", array_values($item)) . PHP_EOL;
+            }
+            return $csv;
+        }
+        return false;
     }
 
     public static function create($type, DataSource $datasource): Report {
@@ -31,8 +46,26 @@ abstract class Report {
         }
     }
 
-    public function publish() {
+    protected function filterByDate(array $data, array $filters)
+    {
+        $startDate = isset($filters['startdate']) ? $filters['startdate'] : null;
+        $endDate = isset($filters['enddate']) ? $filters['enddate'] : null;
         
+        return array_filter($data, function ($item) use ($startDate, $endDate) {
+            if($startDate && $endDate) {
+                return ($item['date'] >= $startDate && $item['date'] <= $endDate);
+            }
+
+            if($startDate) {
+                return $item['date'] >= $startDate;
+            }
+
+            if($endDate) {
+                return $item['date'] <= $endDate;
+            }
+
+            return true;
+        });
     }
 
     /**

@@ -2,21 +2,27 @@
 
 namespace Domain\Reports;
 
-class TurnoverPerBrand extends Report {
+class TurnoverPerBrand extends Report
+{
     protected $brands;
     protected $gmv;
-    public function generateReport() {
+
+    public function generateReport(array $filters = [])
+    {
         $this->loadData();
         $this->mapBrands();
+        $this->gmv = $this->filterByDate($this->gmv, $filters);
 
         $brands_report = [];
-        foreach($this->gmv as $sale) {
-            if(isset($brands_report[$sale['brand_id']])) {
-                $brands_report[$sale['brand_id']]['turnover'] += $this->substractVat($sale['turnover']);
+        foreach ($this->gmv as $sale) {
+            if (isset($brands_report[$sale['brand_id']])) {
+                $brands_report[$sale['brand_id']]['turnover'] += $sale['turnover'];
+                $brands_report[$sale['brand_id']]['turnoverWithoutVat'] += $this->substractVat($sale['turnover']);
             } else {
                 $brands_report[$sale['brand_id']] = [
                     'name' => $sale['brand_name'],
-                    'turnover' => $this->substractVat($sale['turnover'])
+                    'turnover' => $sale['turnover'],
+                    'turnoverWithoutVat' => $this->substractVat($sale['turnover'])
                 ];
             }
         }
@@ -24,12 +30,14 @@ class TurnoverPerBrand extends Report {
         return $brands_report;
     }
 
-    protected function loadData() {
+    protected function loadData()
+    {
         $this->brands = $this->datasource->read('brands.json');
         $this->gmv = $this->datasource->read('gmv.json');
     }
 
-    protected function mapBrands() {
+    protected function mapBrands()
+    {
         $brands_map = array_combine(array_column($this->brands, 'id'), array_values($this->brands));
         $this->gmv = array_map(function ($item) use ($brands_map) {
             $item['date'] = strtotime($item['date']);
@@ -37,4 +45,6 @@ class TurnoverPerBrand extends Report {
             return $item;
         }, $this->gmv);
     }
+
+    
 }
