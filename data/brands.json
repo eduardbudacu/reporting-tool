@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "O-Brand",
+    "description": null,
+    "products": 4,
+    "created": "2018-01-01 00:00:00"
+  },
+  {
+    "id": 2,
+    "name": "T-Brand",
+    "description": null,
+    "products": 2472,
+    "created": "2018-02-01 00:00:00"
+  },
+  {
+    "id": 3,
+    "name": "R-Brand",
+    "description": null,
+    "products": 2104,
+    "created": "2018-03-01 00:00:00"
+  },
+  {
+    "id": 4,
+    "name": "I-Brand",
+    "description": null,
+    "products": 1558,
+    "created": "2018-04-01 00:00:00"
+  },
+  {
+    "id": 5,
+    "name": "U-Brand",
+    "description": null,
+    "products": 2419,
+    "created": "2018-05-01 00:00:00"
+  },
+  {
+    "id": 6,
+    "name": "M-Brand",
+    "description": null,
+    "products": 362,
+    "created": "2018-06-01 00:00:00"
+  },
+  {
+    "id": 7,
+    "name": "X-Brand",
+    "description": null,
+    "products": 489,
+    "created": "2018-07-01 00:00:00"
+  },
+  {
+    "id": 8,
+    "name": "Y-Brand",
+    "description": null,
+    "products": 2412,
+    "created": "2018-08-01 00:00:00"
+  },
+  {
+    "id": 9,
+    "name": "Z-Brand",
+    "description": null,
+    "products": 1788,
+    "created": "2018-09-01 00:00:00"
+  },
+  {
+    "id": 10,
+    "name": "Q-Brand",
+    "description": null,
+    "products": 2223,
+    "created": "2018-10-01 00:00:00"
+  },
+  {
+    "id": 11,
+    "name": "B-Brand",
+    "description": null,
+    "products": 3309,
+    "created": "2018-11-01 00:00:00"
+  },
+  {
+    "id": 12,
+    "name": "AA-Brand",
+    "description": null,
+    "products": 3332,
+    "created": "2018-12-01 00:00:00"
+  }
+]
