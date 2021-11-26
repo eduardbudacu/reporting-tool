@@ -8,6 +8,9 @@ abstract class DataSource
 {
     abstract public function read($filename);
 
+    /**
+     * Factory method for creating DataSource objects
+     */
     public static function create($type): DataSource
     {
         switch ($type) {

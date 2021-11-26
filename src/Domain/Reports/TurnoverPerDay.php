@@ -2,6 +2,9 @@
 
 namespace Domain\Reports;
 
+/**
+ * Generates turnover by day report
+ */
 class TurnoverPerDay extends Report {
     protected $gmv;
 
@@ -26,6 +29,9 @@ class TurnoverPerDay extends Report {
         return $daily_report;
     }
 
+    /**
+     * Loads sale data and performs date conversion to timestamps
+     */
     protected function loadData() {
         $this->gmv = $this->datasource->read('gmv.json');
 

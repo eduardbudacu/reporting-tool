@@ -2,9 +2,23 @@
 
 namespace Domain\Reports;
 
+/**
+ * Generates turnover by brand report
+ */
 class TurnoverPerBrand extends Report
 {
+    /**
+     * Brands data
+     * 
+     * @var array 
+     */
     protected $brands;
+
+    /**
+     * Sales data
+     * 
+     * @var array
+     */
     protected $gmv;
 
     public function generateReport(array $filters = [])
@@ -30,12 +44,18 @@ class TurnoverPerBrand extends Report
         return $brands_report;
     }
 
+    /**
+     * Loads data from external source
+     */
     protected function loadData()
     {
         $this->brands = $this->datasource->read('brands.json');
         $this->gmv = $this->datasource->read('gmv.json');
     }
 
+    /**
+     * Performs brands mapping and conversion of date
+     */
     protected function mapBrands()
     {
         $brands_map = array_combine(array_column($this->brands, 'id'), array_values($this->brands));

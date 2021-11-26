@@ -13,6 +13,9 @@ use DateTime;
 use Domain\Publishing\Destination;
 use Exception;
 
+/**
+ * Handles the interface for generating reports
+ */
 class GenerateReportCommand extends Command
 {
 

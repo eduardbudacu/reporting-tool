@@ -5,10 +5,23 @@ namespace Domain\DataSources;
 use Exception;
 use GuzzleHttp\Client;
 
+/**
+ * Reads data from jsonbin endpoints
+ */
 class Api extends DataSource
 {
+    /**
+     * Http client
+     * 
+     * @var GuzzleHttp\Client
+     */
     protected $client;
 
+    /**
+     * Mapping between source files and jsonbin endpoints
+     * 
+     * @var array
+     */
     protected $endpoints = [
         'brands.json' => '619fd5110ddbee6f8b11df27',
         'gmv.json' => '619fd5780ddbee6f8b11df45'
@@ -31,6 +44,11 @@ class Api extends DataSource
         }
     }
 
+    /**
+     * Reads the data from the endpoint
+     * 
+     * @param string $filename
+     */
     public function read($filename)
     {
         $response = $this->client->request('GET', $this->endpoints[$filename]);

@@ -5,8 +5,14 @@ namespace Domain\Publishing;
 use Exception;
 use Google\Cloud\Storage\StorageClient;
 
+/**
+ * Publishes report into google cloud storage
+ */
 class DataStudio extends Destination
 {
+    /**
+     * @var Google\Cloud\Storage\StorageClient
+     */
     protected $client;
 
     public function __construct($filename)
@@ -22,6 +28,11 @@ class DataStudio extends Destination
     }
 
 
+    /**
+     * Publish content to google storage bucket
+     * 
+     * @param string $content File content
+     */
     public function publish($content)
     {
         $bucket = $this->client->bucket('otriumpublishing');

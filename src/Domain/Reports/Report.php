@@ -3,13 +3,18 @@
 namespace Domain\Reports;
 
 use Domain\DataSources\DataSource;
-use Domain\Publishing\Destination;
 use Exception;
 
 abstract class Report {
 
+    /**
+     * @const integer VAT Percent
+     */
     const VAT_PERCENT = 21;
 
+    /**
+     * @var Domain\DataSources\DataSource
+     */
     protected $datasource;
 
     abstract public function generateReport(array $filters = []);
@@ -19,6 +24,13 @@ abstract class Report {
         $this->datasource = $datasource;
     }
 
+    /**
+     * Generates CSV files
+     * 
+     * @param array $filters Accepts startdate and enddate timestamps to filter report
+     * 
+     * @return string Returns csv content
+     */
     public function getCsv(array $filters = []) {
         $data = $this->generateReport($filters);
 
@@ -33,6 +45,9 @@ abstract class Report {
         return false;
     }
 
+    /**
+     * Factory method for creating report objects
+     */
     public static function create($type, DataSource $datasource): Report {
         switch($type) {
             case 'turnover-per-brand': {
@@ -46,6 +61,14 @@ abstract class Report {
         }
     }
 
+    /**
+     * Filters data by startdate and enddate
+     * 
+     * @param array $data 
+     * @param array $filters
+     * 
+     * @return array
+     */
     protected function filterByDate(array $data, array $filters)
     {
         $startDate = isset($filters['startdate']) ? $filters['startdate'] : null;
@@ -70,6 +93,8 @@ abstract class Report {
 
     /**
      * Returns the amount without VAT
+     * 
+     * @return double
      */
     protected function substractVat($amount) {
         // amountWithVat = amountWithoutVat + amountWithoutVat * 21 / 100

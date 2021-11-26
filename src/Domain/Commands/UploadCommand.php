@@ -8,6 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Domain\DataSources\S3;
 
+/**
+ * Uploads data files to AWS S3
+ */
 class UploadCommand extends Command
 {
 

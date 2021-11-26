@@ -60,7 +60,7 @@ php console.php generate turnover-per-day
 Filtering:
 
 ```
-php console.php turnover-per-day --startdate=01-05-2018 --enddate=07-05-2018
+php console.php generate turnover-per-day --startdate=01-05-2018 --enddate=07-05-2018
 ```
 
 

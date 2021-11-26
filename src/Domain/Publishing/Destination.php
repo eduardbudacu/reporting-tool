@@ -13,6 +13,11 @@ abstract class Destination {
         $this->filename = $filename;
     }
 
+    /**
+     * Factory method for creating a publishing destination
+     * 
+     * @return Domain\Publishing\Destination
+     */
     public static function create($type, $filename) {
         switch($type) {
             case 'local': {
