@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Domain\Commands;
 
@@ -10,5 +10,4 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Command extends SymfonyCommand
 {
-    
 }

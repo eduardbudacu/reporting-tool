@@ -1,16 +1,16 @@
-<?php 
+<?php
+
 namespace Domain\Commands;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Domain\DataSources\S3;
 
 class UploadCommand extends Command
 {
-    
+
     public function configure()
     {
         $this->setName('upload')

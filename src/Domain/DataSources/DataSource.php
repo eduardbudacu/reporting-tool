@@ -4,20 +4,25 @@ namespace Domain\DataSources;
 
 use Exception;
 
-abstract class DataSource {
+abstract class DataSource
+{
     abstract public function read($filename);
 
-    public static function create($type): DataSource {
-        switch($type) {
+    public static function create($type): DataSource
+    {
+        switch ($type) {
             case 'local': {
-                return new Local();
-            }break;
+                    return new Local();
+                }
+                break;
             case 's3': {
-                return new S3();
-            }break;
+                    return new S3();
+                }
+                break;
             case 'api': {
-                return new Api();
-            }break;
+                    return new Api();
+                }
+                break;
             default:
                 throw new Exception('Invalid data source specified');
         }

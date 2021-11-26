@@ -9,20 +9,21 @@ use Exception;
 
 class S3 extends DataSource
 {
-    const BUCKET = 'otriumdatasource';
+    protected $bucket;
 
     protected $client;
-    
-    
+
+
     public function __construct()
     {
-        if(file_exists('credentials/s3.json')) {
+        if (file_exists('credentials/s3.json')) {
             $secrets = json_decode(file_get_contents('credentials/s3.json'), true);
             $credentials = new Credentials($secrets['accessKeyId'], $secrets['secretKey']);
+            $this->bucket = $secrets['bucket'];
         } else {
             throw new Exception('invalid credentials file');
         }
-        
+
 
         $this->client = new S3Client([
             'version' => 'latest',
@@ -35,7 +36,7 @@ class S3 extends DataSource
     {
 
         $result = $this->client->putObject([
-            'Bucket' => self::BUCKET,
+            'Bucket' => $this->bucket,
             'Key'    => $keyname,
             'Body'   => $body
         ]);
@@ -43,9 +44,10 @@ class S3 extends DataSource
         return $result;
     }
 
-    public function read($filename) {
+    public function read($filename)
+    {
         $result = $this->client->getObject([
-            'Bucket' => self::BUCKET,
+            'Bucket' => $this->bucket,
             'Key'    => $filename
         ]);
 

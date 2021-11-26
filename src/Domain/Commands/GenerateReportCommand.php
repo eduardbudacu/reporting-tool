@@ -35,20 +35,20 @@ class GenerateReportCommand extends Command
         $publishOption = $input->getOption('publish');
         $startDate = $input->getOption('startdate');
         $endDate = $input->getOption('enddate');
-        
+
 
         if ($startDate) {
             $startDate = DateTime::createFromFormat('d-m-Y H:i:s', $startDate . ' 00:00:00');
-            if($startDate) {
+            if ($startDate) {
                 $startDate = $startDate->getTimestamp();
             } else {
                 throw new Exception('Invalid start date');
             }
         }
 
-        if($endDate) {
+        if ($endDate) {
             $endDate = DateTime::createFromFormat('d-m-Y H:i:s', $endDate . ' 00:00:00');
-            if($endDate) {
+            if ($endDate) {
                 $endDate = $endDate->getTimestamp();
             } else {
                 throw new Exception('Invalid start date');
@@ -62,9 +62,9 @@ class GenerateReportCommand extends Command
         $destination = Destination::create($publishOption, $reportOption . '.csv');
         $destination->publish($csv);
 
-        if($publishOption == 'local') {
+        if ($publishOption == 'local') {
             $output->writeln([
-                'File succesfuly exported:',
+                'File successfully exported:',
                 $reportOption . '.csv'
             ]);
         } else {
@@ -74,7 +74,7 @@ class GenerateReportCommand extends Command
             ];
 
             $output->writeln([
-                'Report succesfuly generated. Follow the link below to view the report:',
+                'Report successfully generated. Follow the link below to view the report:',
                 $reportLinks[$reportOption]
             ]);
         }

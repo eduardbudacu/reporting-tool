@@ -1,7 +1,9 @@
 {
     "require": {
         "symfony/console": "^5.3",
-        "aws/aws-sdk-php": "^3.204"
+        "aws/aws-sdk-php": "^3.204",
+        "guzzlehttp/guzzle": "^7.0",
+        "google/cloud-storage": "^1.25"
     },
     "autoload": {
         "psr-4": {
