@@ -66,7 +66,7 @@ php console.php generate turnover-per-day --startdate=01-05-2018 --enddate=07-05
 
 ## Technical specs
 
-### Architecture and design decistions
+### Architecture and design decisions
 
 ![Architecture overview](./docs/architecture.jpg)
 
@@ -78,7 +78,7 @@ php console.php generate turnover-per-day --startdate=01-05-2018 --enddate=07-05
 
 2. Publishing
 
-- csv file
+- local csv file
 - DataStudio
 
 ### Frameworks and tools
