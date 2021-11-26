@@ -68,6 +68,8 @@ php console.php generate turnover-per-day --startdate=01-05-2018 --enddate=07-05
 
 ### Architecture and design decisions
 
+Demo and design described in this short video: https://www.youtube.com/watch?v=vsFq6j68u7E
+
 ![Architecture overview](./docs/architecture.jpg)
 
 1. Data sources
